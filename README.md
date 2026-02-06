@@ -1,1 +1,0 @@
-# Repositario-Pensamiento

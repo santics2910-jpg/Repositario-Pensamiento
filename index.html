@@ -1,0 +1,402 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Portafolio - Pensamiento de Ingeniería</title>
+  <meta name="description" content="Portafolio de tareas - Pensamiento de Ingeniería (8 semanas)">
+  <style>
+    /* ===== Colores institucionales IBERO (Guía cromática) ===== */
+    :root{
+      --ibero-red: #E00034;   /* Rojo Ibero */
+      --ibero-gray: #82786F;  /* Gris Ibero */
+      --ibero-black: #000000; /* Negro */
+
+      --bg: #ffffff;
+      --card-radius: 12px;
+      --max-width: 1100px;
+      --gap: 18px;
+      --ff-sans: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    }
+
+    /* ===== Reset básico ===== */
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:var(--ff-sans);
+      background:linear-gradient(180deg,#faf9f8 0%, #fff 100%);
+      color:#222;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      padding:24px;
+      display:flex;
+      justify-content:center;
+    }
+
+    .container{
+      width:100%;
+      max-width:var(--max-width);
+    }
+
+    header{
+      display:flex;
+      align-items:center;
+      gap:16px;
+      margin-bottom:22px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:14px;
+    }
+
+    .logo-mark{
+      width:74px;height:74px;
+      background:var(--ibero-red);
+      border-radius:8px;
+      display:flex;align-items:center;justify-content:center;
+      color:white;font-weight:700;font-size:20px;letter-spacing:1px;
+    }
+
+    .title{
+      line-height:1;
+    }
+    .title h1{margin:0;font-size:20px}
+    .title p{margin:2px 0 0 0;color:var(--ibero-gray)}
+
+    /* Top actions */
+    .top-actions{margin-left:auto;display:flex;gap:10px;align-items:center}
+    .btn{background:var(--ibero-red);border:0;color:#fff;padding:8px 12px;border-radius:8px;cursor:pointer}
+    .btn.secondary{background:transparent;border:1px solid var(--ibero-gray);color:var(--ibero-gray)}
+
+    /* Preview grid */
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+      gap:var(--gap);
+    }
+
+    .card{
+      background:#fff;border-radius:var(--card-radius);box-shadow:0 6px 18px rgba(16,18,20,0.06);
+      overflow:hidden;display:flex;flex-direction:column;min-height:260px;
+      transition:transform .18s ease,box-shadow .18s ease;
+    }
+    .card:hover{transform:translateY(-6px);box-shadow:0 12px 30px rgba(16,18,20,0.08)}
+
+    .card .thumb{height:140px;background:linear-gradient(180deg,var(--ibero-red),#b5002a);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700}
+    .card .content{padding:14px;flex:1;display:flex;flex-direction:column}
+    .meta{font-size:12px;color:var(--ibero-gray);margin-bottom:8px}
+    .excerpt{flex:1;margin-bottom:12px}
+    .card .actions{display:flex;gap:8px}
+
+    /* Modal / detalles */
+    .overlay{position:fixed;inset:0;background:rgba(0,0,0,0.55);display:none;align-items:center;justify-content:center;padding:28px;z-index:1000}
+    .overlay.open{display:flex}
+    .modal{width:100%;max-width:900px;background:#fff;border-radius:14px;overflow:auto;max-height:90vh;box-shadow:0 24px 60px rgba(0,0,0,0.25)}
+    .modal .modal-header{display:flex;align-items:center;gap:12px;padding:16px 20px;border-bottom:1px solid #eee}
+    .modal .modal-header h2{margin:0;font-size:18px}
+    .modal .modal-body{padding:18px 20px}
+
+    /* Media gallery */
+    .gallery{display:grid;grid-template-columns:1fr 220px;gap:12px}
+    .gallery .media{background:#fafafa;border-radius:10px;padding:8px;display:flex;align-items:center;justify-content:center;min-height:220px}
+    .gallery img{max-width:100%;max-height:100%;border-radius:8px}
+    .video-embed{width:100%;height:100%;border-radius:8px}
+    .media-list{display:flex;flex-direction:column;gap:8px}
+    .media-list button{padding:8px;border-radius:8px;border:1px solid #eee;background:#fff;cursor:pointer;text-align:left}
+
+    /* Lists */
+    .materials, .references{margin-top:14px}
+    .materials ul{margin:8px 0 0 20px}
+
+    /* Responsive tweaks */
+    @media (max-width:720px){
+      .gallery{grid-template-columns:1fr}
+      .logo-mark{width:56px;height:56px;font-size:16px}
+    }
+
+    footer{margin-top:28px;padding:14px 6px;color:var(--ibero-gray);font-size:13px;text-align:center}
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="brand">
+        <div class="logo-mark">IBERO</div>
+        <div class="title">
+          <h1>Santiago Cervantes</h1>
+          <p>Pensamiento de Ingeniería — Portafolio de tareas (8 semanas)</p>
+        </div>
+      </div>
+      <div class="top-actions">
+        <button class="btn" onclick="openAll()">Ver todas (lista)</button>
+        <button class="btn secondary" onclick="location.href='#'">Descargar PDF</button>
+      </div>
+    </header>
+
+    <!-- Grid de previsualizaciones: 8 tarjetas (reemplaza imagenes, extractos) -->
+    <main class="grid" id="cards">
+      <!-- Generadas: Semana 1..8 -->
+      <!-- Copia y pega / duplica la tarjeta si necesitas más -->
+
+      <!-- EJEMPLO DE TARJETA PARA CADA SEMANA -->
+      <!-- TASK_CARD_TEMPLATE START -->
+      <article class="card" data-task="1">
+        <div class="thumb">Semana 1 — Diseño conceptual</div>
+        <div class="content">
+          <div class="meta">Semana 1 · Fecha: 2025-02-10</div>
+          <h3>Descripción breve de la tarea 1</h3>
+          <p class="excerpt">Breve vista previa: Aquí resumas en una línea la actividad — qué se hizo y objetivo.</p>
+          <div class="actions">
+            <button class="btn" onclick="openTask(1)">Ver tarea</button>
+            <button class="btn secondary" onclick="shareTask(1)">Compartir</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- Duplica la tarjeta y cambia data-task y contenidos hasta 8 -->
+      <article class="card" data-task="2">
+        <div class="thumb">Semana 2 — Bocetos</div>
+        <div class="content">
+          <div class="meta">Semana 2 · Fecha: 2025-02-17</div>
+          <h3>Descripción breve de la tarea 2</h3>
+          <p class="excerpt">Breve vista previa: Bocetos iniciales y justificación técnica.</p>
+          <div class="actions">
+            <button class="btn" onclick="openTask(2)">Ver tarea</button>
+            <button class="btn secondary" onclick="shareTask(2)">Compartir</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" data-task="3">
+        <div class="thumb">Semana 3 — Prototipo</div>
+        <div class="content">
+          <div class="meta">Semana 3 · Fecha: 2025-02-24</div>
+          <h3>Descripción breve de la tarea 3</h3>
+          <p class="excerpt">Breve vista previa: Prototipo funcional y pruebas.</p>
+          <div class="actions">
+            <button class="btn" onclick="openTask(3)">Ver tarea</button>
+            <button class="btn secondary" onclick="shareTask(3)">Compartir</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" data-task="4">
+        <div class="thumb">Semana 4 — Evaluación</div>
+        <div class="content">
+          <div class="meta">Semana 4 · Fecha: 2025-03-03</div>
+          <h3>Descripción breve de la tarea 4</h3>
+          <p class="excerpt">Breve vista previa: Resultados de la evaluación del prototipo.</p>
+          <div class="actions">
+            <button class="btn" onclick="openTask(4)">Ver tarea</button>
+            <button class="btn secondary" onclick="shareTask(4)">Compartir</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" data-task="5">
+        <div class="thumb">Semana 5 — Iteración</div>
+        <div class="content">
+          <div class="meta">Semana 5 · Fecha: 2025-03-10</div>
+          <h3>Descripción breve de la tarea 5</h3>
+          <p class="excerpt">Breve vista previa: Cambios aplicados al diseño tras feedback.</p>
+          <div class="actions">
+            <button class="btn" onclick="openTask(5)">Ver tarea</button>
+            <button class="btn secondary" onclick="shareTask(5)">Compartir</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" data-task="6">
+        <div class="thumb">Semana 6 — Pruebas finales</div>
+        <div class="content">
+          <div class="meta">Semana 6 · Fecha: 2025-03-17</div>
+          <h3>Descripción breve de la tarea 6</h3>
+          <p class="excerpt">Breve vista previa: Pruebas de usabilidad y métricas.</p>
+          <div class="actions">
+            <button class="btn" onclick="openTask(6)">Ver tarea</button>
+            <button class="btn secondary" onclick="shareTask(6)">Compartir</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" data-task="7">
+        <div class="thumb">Semana 7 — Documentación</div>
+        <div class="content">
+          <div class="meta">Semana 7 · Fecha: 2025-03-24</div>
+          <h3>Descripción breve de la tarea 7</h3>
+          <p class="excerpt">Breve vista previa: Manual y documentación técnica.</p>
+          <div class="actions">
+            <button class="btn" onclick="openTask(7)">Ver tarea</button>
+            <button class="btn secondary" onclick="shareTask(7)">Compartir</button>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" data-task="8">
+        <div class="thumb">Semana 8 — Entrega final</div>
+        <div class="content">
+          <div class="meta">Semana 8 · Fecha: 2025-03-31</div>
+          <h3>Descripción breve de la tarea 8</h3>
+          <p class="excerpt">Breve vista previa: Entrega final y reflexiones.</p>
+          <div class="actions">
+            <button class="btn" onclick="openTask(8)">Ver tarea</button>
+            <button class="btn secondary" onclick="shareTask(8)">Compartir</button>
+          </div>
+        </div>
+      </article>
+
+      <!-- TASK_CARD_TEMPLATE END -->
+
+    </main>
+
+    <footer>
+      Usa este archivo como plantilla: reemplaza las miniaturas, descripciones, lista de materiales, y referencias de cada semana.
+    </footer>
+  </div>
+
+  <!-- ===== Modal overlay: plantilla de detalles por tarea ===== -->
+  <div id="overlay" class="overlay" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-header">
+        <h2 id="modalTitle">Tarea — Título</h2>
+        <div style="margin-left:auto;display:flex;gap:8px;align-items:center">
+          <button class="btn secondary" onclick="closeTask()">Cerrar</button>
+        </div>
+      </div>
+      <div class="modal-body">
+        <div class="gallery">
+          <div class="media" id="mediaContainer">
+            <!-- Imagen o video embebido -->
+            <img id="mediaPreview" src="https://via.placeholder.com/800x450?text=Imagen+de+ejemplo" alt="Vista de la tarea">
+          </div>
+          <aside class="media-list" id="mediaList">
+            <!-- Botones para cambiar media (images/videos) -->
+          </aside>
+        </div>
+
+        <section class="description">
+          <h3>Descripción</h3>
+          <p id="taskDescription">Aquí va la descripción completa de la tarea. Describe el objetivo, el proceso y conclusiones.</p>
+        </section>
+
+        <section class="materials">
+          <h3>Listado de materiales</h3>
+          <ul id="taskMaterials">
+            <li>Material 1</li>
+            <li>Material 2</li>
+          </ul>
+        </section>
+
+        <section class="references">
+          <h3>Referencias</h3>
+          <ol id="taskReferences">
+            <li>Referencia 1</li>
+            <li>Referencia 2</li>
+          </ol>
+        </section>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* ===== Datos de ejemplo: reemplaza por tu contenido real ===== */
+    const tasks = {
+      1: {
+        title: 'Diseño conceptual',
+        date: '2025-02-10',
+        description: 'Descripción larga de la tarea 1. Explica propósito, pasos y resultados. Aquí puedes agregar la reflexión personal y evidencia.',
+        materials: ['Cartón', 'Cinta adhesiva', 'Software de diseño'],
+        references: ['Autor (Año). Título. Editorial.','Fuente web - URL'],
+        media: [
+          {type:'image', src:'https://via.placeholder.com/900x500?text=Semana+1+Imagen+1', alt:'Imagen 1'},
+          {type:'image', src:'https://via.placeholder.com/900x500?text=Semana+1+Imagen+2', alt:'Imagen 2'},
+          {type:'video', src:'https://www.w3schools.com/html/mov_bbb.mp4', alt:'Video de ejemplo (mp4)'}
+        ]
+      },
+
+      /* Repite o sustituye contenido de ejemplo para las tareas 2..8 */
+      2: { title:'Bocetos', date:'2025-02-17', description:'Texto de ejemplo para la semana 2', materials:['Lápiz','Papel'], references:['Referencia 2'], media:[{type:'image',src:'https://via.placeholder.com/900x500?text=Semana+2',alt:'Semana2'}]},
+      3: { title:'Prototipo', date:'2025-02-24', description:'Texto de ejemplo para la semana 3', materials:['Impresora 3D'], references:['Referencia 3'], media:[{type:'image',src:'https://via.placeholder.com/900x500?text=Semana+3',alt:'Semana3'}]},
+      4: { title:'Evaluación', date:'2025-03-03', description:'Texto de ejemplo para la semana 4', materials:['Encuestas'], references:['Referencia 4'], media:[{type:'image',src:'https://via.placeholder.com/900x500?text=Semana+4',alt:'Semana4'}]},
+      5: { title:'Iteración', date:'2025-03-10', description:'Texto de ejemplo para la semana 5', materials:['Herramientas'], references:['Referencia 5'], media:[{type:'image',src:'https://via.placeholder.com/900x500?text=Semana+5',alt:'Semana5'}]},
+      6: { title:'Pruebas finales', date:'2025-03-17', description:'Texto de ejemplo para la semana 6', materials:['Usuarios de prueba'], references:['Referencia 6'], media:[{type:'image',src:'https://via.placeholder.com/900x500?text=Semana+6',alt:'Semana6'}]},
+      7: { title:'Documentación', date:'2025-03-24', description:'Texto de ejemplo para la semana 7', materials:['PC','Editor'], references:['Referencia 7'], media:[{type:'image',src:'https://via.placeholder.com/900x500?text=Semana+7',alt:'Semana7'}]},
+      8: { title:'Entrega final', date:'2025-03-31', description:'Texto de ejemplo para la semana 8', materials:['PDF','Presentación'], references:['Referencia 8'], media:[{type:'image',src:'https://via.placeholder.com/900x500?text=Semana+8',alt:'Semana8'}]},
+    };
+
+    function openTask(n){
+      const data = tasks[n];
+      if(!data) return alert('Tarea no encontrada: ' + n);
+      document.getElementById('modalTitle').textContent = `Semana ${n} — ${data.title}`;
+      document.getElementById('taskDescription').textContent = data.description || '';
+
+      // materiales
+      const mat = document.getElementById('taskMaterials'); mat.innerHTML = '';
+      (data.materials||[]).forEach(it=>{ const li=document.createElement('li'); li.textContent=it; mat.appendChild(li)});
+
+      // referencias
+      const ref = document.getElementById('taskReferences'); ref.innerHTML = '';
+      (data.references||[]).forEach(it=>{ const li=document.createElement('li'); li.textContent=it; ref.appendChild(li)});
+
+      // media
+      const mediaList = document.getElementById('mediaList'); mediaList.innerHTML='';
+      const preview = document.getElementById('mediaPreview');
+      const container = document.getElementById('mediaContainer');
+      preview.remove(); // ensure fresh element
+
+      // create default preview element
+      const first = (data.media && data.media[0]) || {type:'image',src:'https://via.placeholder.com/900x500?text=Sin+media',alt:''};
+      if(first.type==='video'){
+        const v = document.createElement('video'); v.className='video-embed'; v.controls=true; v.src = first.src; v.alt = first.alt || '';
+        container.innerHTML=''; container.appendChild(v);
+      } else {
+        const i = document.createElement('img'); i.id='mediaPreview'; i.src = first.src; i.alt = first.alt || '';
+        container.innerHTML=''; container.appendChild(i);
+      }
+
+      (data.media||[]).forEach((m,ix)=>{
+        const btn = document.createElement('button');
+        btn.textContent = (m.type==='video' ? `Video ${ix+1}` : `Imagen ${ix+1}`);
+        btn.addEventListener('click',()=>{
+          if(m.type==='video'){
+            const v = document.createElement('video'); v.className='video-embed'; v.controls=true; v.src = m.src; container.innerHTML=''; container.appendChild(v);
+          } else {
+            const i = document.createElement('img'); i.id='mediaPreview'; i.src = m.src; i.alt = m.alt || '';
+            container.innerHTML=''; container.appendChild(i);
+          }
+        });
+        mediaList.appendChild(btn);
+      });
+
+      // abrir modal
+      document.getElementById('overlay').classList.add('open');
+      document.getElementById('overlay').setAttribute('aria-hidden','false');
+    }
+
+    function closeTask(){
+      document.getElementById('overlay').classList.remove('open');
+      document.getElementById('overlay').setAttribute('aria-hidden','true');
+    }
+
+    function shareTask(n){
+      const url = location.href + '#tarea-' + n;
+      navigator.clipboard?.writeText(url).then(()=> alert('URL de la tarea copiada al portapapeles: ' + url)).catch(()=> prompt('Copia la URL de la tarea:', url));
+    }
+
+    // Abrir vista lista (simple): abre el primer modal como ejemplo
+    function openAll(){
+      openTask(1);
+    }
+
+    // Cerrar modal con Escape o clic fuera
+    document.getElementById('overlay').addEventListener('click', (e)=>{ if(e.target.id==='overlay') closeTask(); });
+    document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeTask(); });
+
+  </script>
+</body>
+</html>
